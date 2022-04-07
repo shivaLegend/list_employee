@@ -25,10 +25,9 @@ class DetailUser extends StatelessWidget {
       appBar: AppBar(title: const Text('Detail User')),
       body: Center(child: StatefulBuilder(
         builder: (context, setState) {
-          return AlertDialog(
-            title: const Text("Edit Information"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               children: [
                 TextField(
                   controller: TextEditingController(text: username),
@@ -43,7 +42,7 @@ class DetailUser extends StatelessWidget {
                 ),
                 TextField(
                   controller: TextEditingController(text: id),
-                  decoration: new InputDecoration.collapsed(hintText: 'ID'),
+                  decoration: const InputDecoration.collapsed(hintText: 'ID'),
                   onChanged: (String value) {
                     id = value;
                   },
@@ -88,25 +87,23 @@ class DetailUser extends StatelessWidget {
                         });
                       });
                     }),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      Map<String, Object> object = {
+                        "username": username,
+                        "id": id,
+                        "role": role,
+                        "doj": doj
+                      };
+                      collection.doc(idOfDoc).update(object);
+                      Navigator.of(context).pop();
+                    });
+                  },
+                  child: const Text("SAVE"),
+                ),
               ],
             ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    Map<String, Object> object = {
-                      "username": username,
-                      "id": id,
-                      "role": role,
-                      "doj": doj
-                    };
-                    collection.doc(idOfDoc).update(object);
-                    Navigator.of(context).pop();
-                  });
-                },
-                child: const Text("SAVE"),
-              ),
-            ],
           );
         },
       )),
