@@ -14,7 +14,7 @@ void main() async {
       primaryColor: Colors.red,
       accentColor: Colors.green,
     ),
-    home: MyApp(),
+    home: const MyApp(),
   ));
 }
 
