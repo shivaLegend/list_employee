@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 
 class DetailUser extends StatelessWidget {
   var collection = FirebaseFirestore.instance.collection('MyEmployee');
-  String idOfDoc = "";
-  String username = "";
-  String id = "";
-  String role = "";
-  Timestamp doj = Timestamp.now();
+  String idOfDoc = ""; //ID of document on firestore
+  String username = ""; //Name of user
+  String id = ""; // ID of user
+  String role = ""; //Role of user
+  Timestamp doj = Timestamp.now(); //Date of joining
   DetailUser(
       {Key? key,
       required this.idOfDoc,

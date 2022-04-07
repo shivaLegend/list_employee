@@ -26,13 +26,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List listIDDocument = [];
+  List listIDDocument = []; //List ID of document in Firestore
   DateTime selectedDate = DateTime.now();
-  String inputName = "";
-  String inputID = "";
-  String inputRole = "";
-  Timestamp inputDOJ = Timestamp.now();
+  String inputName = ""; //Name user
+  String inputID = ""; // ID user
+  String inputRole = ""; //Role of user
+  Timestamp inputDOJ = Timestamp.now(); //Date of joining
   createUser() async {
+    //Create user on firestore
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("MyEmployee").doc(inputName);
     Map<String, Object> object = {
@@ -47,6 +48,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   deleteUser(item) {
+    //delete user on firestore
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("MyEmployee").doc(item);
     documentReference.delete().whenComplete(() => print("delete successfully"));
