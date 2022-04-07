@@ -33,9 +33,6 @@ class _MyAppState extends State<MyApp> {
   String inputRole = "";
   Timestamp inputDOJ = Timestamp.now();
   createUser() async {
-    final QuerySnapshot result =
-        await FirebaseFirestore.instance.collection('MyEmployee').get();
-
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("MyEmployee").doc(inputName);
     Map<String, Object> object = {
