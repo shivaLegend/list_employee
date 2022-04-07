@@ -26,8 +26,10 @@ class DetailUser extends StatelessWidget {
       body: Center(child: StatefulBuilder(
         builder: (context, setState) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(50.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextField(
                   controller: TextEditingController(text: username),
