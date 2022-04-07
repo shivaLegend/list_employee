@@ -20,60 +20,60 @@ class DetailUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timestamp? datePicker = null;
+    Timestamp? datePicker;
     return Scaffold(
-      appBar: AppBar(title: Text('Detail User')),
+      appBar: AppBar(title: const Text('Detail User')),
       body: Center(child: StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: Text("Edit Information"),
+            title: const Text("Edit Information"),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  controller: TextEditingController(text: "$username"),
+                  controller: TextEditingController(text: username),
                   decoration:
-                      new InputDecoration.collapsed(hintText: 'Username'),
+                      const InputDecoration.collapsed(hintText: 'Username'),
                   onChanged: (String value) {
                     username = value;
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextField(
-                  controller: TextEditingController(text: "$id"),
+                  controller: TextEditingController(text: id),
                   decoration: new InputDecoration.collapsed(hintText: 'ID'),
                   onChanged: (String value) {
                     id = value;
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextField(
-                  controller: TextEditingController(text: "$role"),
-                  decoration: new InputDecoration.collapsed(hintText: 'Role'),
+                  controller: TextEditingController(text: role),
+                  decoration: const InputDecoration.collapsed(hintText: 'Role'),
                   onChanged: (String value) {
                     role = value;
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
-                    Text("DOJ: "),
+                    const Text("DOJ: "),
                     Text(datePicker == null
                         ? DateFormat('dd/MM/yyyy').format(doj.toDate())
                         : DateFormat('dd/MM/yyyy').format(datePicker!.toDate()))
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 RaisedButton(
-                    child: Text("Pick date of joining"),
+                    child: const Text("Pick date of joining"),
                     onPressed: () {
                       showDatePicker(
                               context: context,
@@ -104,7 +104,7 @@ class DetailUser extends StatelessWidget {
                     Navigator.of(context).pop();
                   });
                 },
-                child: Text("SAVE"),
+                child: const Text("SAVE"),
               ),
             ],
           );

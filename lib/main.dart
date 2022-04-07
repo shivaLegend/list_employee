@@ -35,7 +35,6 @@ class _MyAppState extends State<MyApp> {
   createUser() async {
     final QuerySnapshot result =
         await FirebaseFirestore.instance.collection('MyEmployee').get();
-    final List<DocumentSnapshot> documents = result.docs;
 
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("MyEmployee").doc(inputName);
@@ -83,7 +82,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("List employee"),
+        title: const Text("List employee"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -94,28 +93,28 @@ class _MyAppState extends State<MyApp> {
               return StatefulBuilder(
                 builder: (context, setState) {
                   return AlertDialog(
-                    title: Text(""),
+                    title: const Text(""),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         TextField(
-                          decoration: new InputDecoration.collapsed(
+                          decoration: const InputDecoration.collapsed(
                               hintText: 'Username'),
                           onChanged: (String value) {
                             inputName = value;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         TextField(
                           decoration:
-                              new InputDecoration.collapsed(hintText: 'ID'),
+                              const InputDecoration.collapsed(hintText: 'ID'),
                           onChanged: (String value) {
                             inputID = value;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         TextField(
@@ -125,21 +124,21 @@ class _MyAppState extends State<MyApp> {
                             inputRole = value;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           children: [
-                            Text("DOJ: "),
+                            const Text("DOJ: "),
                             Text(DateFormat('dd/MM/yyyy')
                                 .format(datePicker.toDate()))
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         RaisedButton(
-                            child: Text("Pick date of joining"),
+                            child: const Text("Pick date of joining"),
                             onPressed: () {
                               showDatePicker(
                                       context: context,
@@ -168,7 +167,7 @@ class _MyAppState extends State<MyApp> {
                             // contentText = "Changed Content of Dialog";
                           });
                         },
-                        child: Text("ADD"),
+                        child: const Text("ADD"),
                       ),
                     ],
                   );
@@ -177,7 +176,7 @@ class _MyAppState extends State<MyApp> {
             },
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream:
@@ -192,7 +191,7 @@ class _MyAppState extends State<MyApp> {
                     key: Key(index.toString()),
                     child: Card(
                       elevation: 4,
-                      margin: EdgeInsets.all(8),
+                      margin: const EdgeInsets.all(8),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       child: GestureDetector(
@@ -221,7 +220,7 @@ class _MyAppState extends State<MyApp> {
                                   documentSnapshot["username"]
                               : (index + 1).toString() + ". " + ""),
                           trailing: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
                             ),
