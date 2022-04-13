@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
 import 'package:list_employee/detailUser.dart';
+import 'package:list_employee/model/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,23 +29,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   List listIDDocument = []; //List ID of document in Firestore
   DateTime selectedDate = DateTime.now();
-  String inputName = ""; //Name user
-  String inputID = ""; // ID user
-  String inputRole = ""; //Role of user
-  Timestamp inputDOJ = Timestamp.now(); //Date of joining
+  User user = User();
   createUser() async {
     //Create user on firestore
     DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("MyEmployee").doc(inputName);
-    Map<String, Object> object = {
-      "username": inputName,
-      "id": inputID,
-      "role": inputRole,
-      "doj": inputDOJ
-    };
+        FirebaseFirestore.instance.collection("MyEmployee").doc(user.inputName);
+    Map<String, dynamic> object = user.toMap();
     documentReference
         .set(object)
-        .whenComplete(() => print("$inputName created"));
+        .whenComplete(() => print("$user.inputName created"));
   }
 
   deleteUser(item) {
@@ -100,7 +93,7 @@ class _MyAppState extends State<MyApp> {
                           decoration: const InputDecoration.collapsed(
                               hintText: 'Username'),
                           onChanged: (String value) {
-                            inputName = value;
+                            user.inputName = value;
                           },
                         ),
                         const SizedBox(
@@ -110,7 +103,7 @@ class _MyAppState extends State<MyApp> {
                           decoration:
                               const InputDecoration.collapsed(hintText: 'ID'),
                           onChanged: (String value) {
-                            inputID = value;
+                            user.inputID = value;
                           },
                         ),
                         const SizedBox(
@@ -118,9 +111,9 @@ class _MyAppState extends State<MyApp> {
                         ),
                         TextField(
                           decoration:
-                              new InputDecoration.collapsed(hintText: 'Role'),
+                              const InputDecoration.collapsed(hintText: 'Role'),
                           onChanged: (String value) {
-                            inputRole = value;
+                            user.inputRole = value;
                           },
                         ),
                         const SizedBox(
@@ -148,7 +141,7 @@ class _MyAppState extends State<MyApp> {
                                 setState(() {
                                   datePicker = Timestamp.fromDate(
                                       value ?? DateTime.now());
-                                  inputDOJ = datePicker;
+                                  user.inputDOJ = datePicker;
                                 });
                               });
                             }),
@@ -158,10 +151,11 @@ class _MyAppState extends State<MyApp> {
                       TextButton(
                         onPressed: () {
                           setState(() {
-                            if (inputName == "") {
+                            if (user.inputName == "") {
                               return;
                             }
                             createUser();
+                            getData();
                             Navigator.of(context).pop();
                             // contentText = "Changed Content of Dialog";
                           });
@@ -186,6 +180,17 @@ class _MyAppState extends State<MyApp> {
               itemBuilder: (BuildContext context, int index) {
                 QueryDocumentSnapshot<Object?>? documentSnapshot =
                     snapshot.data?.docs[index];
+                User tempUser = User();
+                tempUser.inputName = documentSnapshot != null
+                    ? documentSnapshot["username"]
+                    : "";
+                tempUser.inputID =
+                    documentSnapshot != null ? documentSnapshot["id"] : "";
+                tempUser.inputRole =
+                    documentSnapshot != null ? documentSnapshot["role"] : "";
+                tempUser.inputDOJ = documentSnapshot != null
+                    ? documentSnapshot["doj"]
+                    : Timestamp.now();
                 return Dismissible(
                     key: Key(index.toString()),
                     child: Card(
@@ -197,18 +202,7 @@ class _MyAppState extends State<MyApp> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => DetailUser(
-                                    username: documentSnapshot != null
-                                        ? documentSnapshot["username"]
-                                        : "",
-                                    id: documentSnapshot != null
-                                        ? documentSnapshot["id"]
-                                        : "",
-                                    role: documentSnapshot != null
-                                        ? documentSnapshot["role"]
-                                        : "",
-                                    doj: documentSnapshot != null
-                                        ? documentSnapshot["doj"]
-                                        : Timestamp.now(),
+                                    user: tempUser,
                                     idOfDoc: listIDDocument[index],
                                   )));
                         },

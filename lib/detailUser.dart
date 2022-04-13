@@ -1,21 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:list_employee/model/user.dart';
 
 class DetailUser extends StatelessWidget {
   var collection = FirebaseFirestore.instance.collection('MyEmployee');
   String idOfDoc = ""; //ID of document on firestore
-  String username = ""; //Name of user
-  String id = ""; // ID of user
-  String role = ""; //Role of user
-  Timestamp doj = Timestamp.now(); //Date of joining
-  DetailUser(
-      {Key? key,
-      required this.idOfDoc,
-      required this.username,
-      required this.id,
-      required this.role,
-      required this.doj})
+  User user = User();
+  DetailUser({Key? key, required this.idOfDoc, required this.user})
       : super(key: key);
 
   @override
@@ -32,31 +24,31 @@ class DetailUser extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextField(
-                  controller: TextEditingController(text: username),
+                  controller: TextEditingController(text: user.inputName),
                   decoration:
                       const InputDecoration.collapsed(hintText: 'Username'),
                   onChanged: (String value) {
-                    username = value;
+                    user.inputName = value;
                   },
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextField(
-                  controller: TextEditingController(text: id),
+                  controller: TextEditingController(text: user.inputID),
                   decoration: const InputDecoration.collapsed(hintText: 'ID'),
                   onChanged: (String value) {
-                    id = value;
+                    user.inputID = value;
                   },
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextField(
-                  controller: TextEditingController(text: role),
+                  controller: TextEditingController(text: user.inputRole),
                   decoration: const InputDecoration.collapsed(hintText: 'Role'),
                   onChanged: (String value) {
-                    role = value;
+                    user.inputRole = value;
                   },
                 ),
                 const SizedBox(
@@ -66,7 +58,8 @@ class DetailUser extends StatelessWidget {
                   children: [
                     const Text("DOJ: "),
                     Text(datePicker == null
-                        ? DateFormat('dd/MM/yyyy').format(doj.toDate())
+                        ? DateFormat('dd/MM/yyyy')
+                            .format(user.inputDOJ.toDate())
                         : DateFormat('dd/MM/yyyy').format(datePicker!.toDate()))
                   ],
                 ),
@@ -85,19 +78,14 @@ class DetailUser extends StatelessWidget {
                         setState(() {
                           datePicker =
                               Timestamp.fromDate(value ?? DateTime.now());
-                          doj = datePicker!;
+                          user.inputDOJ = datePicker!;
                         });
                       });
                     }),
                 TextButton(
                   onPressed: () {
                     setState(() {
-                      Map<String, Object> object = {
-                        "username": username,
-                        "id": id,
-                        "role": role,
-                        "doj": doj
-                      };
+                      Map<String, dynamic> object = user.toMap();
                       collection.doc(idOfDoc).update(object);
                       Navigator.of(context).pop();
                     });
