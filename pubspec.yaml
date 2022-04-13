@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   cloud_firestore: 
   intl: ^0.17.0
+  path: ^1.8.0
+  sqflite:
+  path_provider:
 dev_dependencies:
   flutter_test:
     sdk: flutter
