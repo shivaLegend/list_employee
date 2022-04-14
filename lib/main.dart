@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
-import 'package:list_employee/detailUser.dart';
+import 'package:list_employee/view/detailUser.dart';
 import 'package:list_employee/model/user.dart';
 
 void main() async {
@@ -28,7 +28,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List listIDDocument = []; //List ID of document in Firestore
-  DateTime selectedDate = DateTime.now();
   User user = User();
   createUser() async {
     //Create user on firestore

@@ -14,10 +14,10 @@ class User {
     return map;
   }
 
-  // fromMapObject(Map<String, dynamic> map) {
-  //   inputName = map['username'];
-  //   inputID = map['id'];
-  //   inputRole = map['role'];
-  //   inputDOJ = map['doj'];
-  // }
+  fromMapObject(Map<String, dynamic> map) {
+    inputName = map['username'];
+    inputID = map['id'];
+    inputRole = map['role'];
+    inputDOJ = map['doj'];
+  }
 }
