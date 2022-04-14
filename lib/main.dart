@@ -29,7 +29,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   List listIDDocument = []; //List ID of document in Firestore
   User user = User();
-  createUser() async {
+  createUserFirestore() async {
     //Create user on firestore
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("MyEmployee").doc(user.inputName);
@@ -39,14 +39,14 @@ class _MyAppState extends State<MyApp> {
         .whenComplete(() => print("$user.inputName created"));
   }
 
-  deleteUser(item) {
+  deleteUserFirestore(item) {
     //delete user on firestore
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("MyEmployee").doc(item);
     documentReference.delete().whenComplete(() => print("delete successfully"));
   }
 
-  Future<void> getData() async {
+  Future<void> getListIDDocumentFirestore() async {
     CollectionReference _collectionRef =
         FirebaseFirestore.instance.collection('MyEmployee');
 
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+    getListIDDocumentFirestore();
   }
 
   @override
@@ -153,8 +153,8 @@ class _MyAppState extends State<MyApp> {
                             if (user.inputName == "") {
                               return;
                             }
-                            createUser();
-                            getData();
+                            createUserFirestore();
+                            getListIDDocumentFirestore();
                             Navigator.of(context).pop();
                             // contentText = "Changed Content of Dialog";
                           });
@@ -219,7 +219,7 @@ class _MyAppState extends State<MyApp> {
                             onPressed: () {
                               setState(() {
                                 // todos.removeAt(index);
-                                deleteUser(documentSnapshot != null
+                                deleteUserFirestore(documentSnapshot != null
                                     ? listIDDocument[index]
                                     : "");
                               });
